@@ -1,0 +1,95 @@
+<script>
+  //DTM Property: Medicare
+  //DataElemtent: Base URL
+  document.URL.split('?')[0]
+
+var isDashboardLoaded = sessionStorage.getItem('isDashBoardLoaded');
+var pageLoadCallTriggered  = _satellite.getVar('pageLoadCallTriggered');
+var lobVal = _satellite.getVar('lineOfBusiness');
+if(isDashboardLoaded != 'true' && lobVal != "" && pageLoadCallTriggered != 'true'){
+    if(lobVal == "m&r")
+      _satellite.track('mrTrackPageLoad');
+    else
+      _satellite.track('trackPages');
+}
+_satellite.setVar('dashboardCallLoaded', 'true')
+sessionStorage.setItem('isDashBoardLoaded', 'true');
+
+/*
+Dashboard Call
+1. Event type
+  DE change: RallyUID
+
+2. Condition
+ RallyUUID doesnt match regex "^\s*$"
+ %pageName% == "dashboard"
+3. Custom code
+  var isDashboardLoaded = sessionStorage.getItem('isDashBoardLoaded');
+  var pageLoadCallTriggered  = _satellite.getVar('pageLoadCallTriggered');
+  var lobVal = _satellite.getVar('lineOfBusiness');
+  if(isDashboardLoaded != 'true' && lobVal != "" && pageLoadCallTriggered != 'true'){
+      if(lobVal == "m&r")
+        _satellite.track('mrTrackPageLoad');
+      else
+        _satellite.track('trackPages');
+  }
+  _satellite.setVar('dashboardCallLoaded', 'true')
+  sessionStorage.setItem('isDashBoardLoaded', 'true');
+
+E&I page load call
+1. Condition
+ RallyUUID doesnt match regex "^\s*$"
+
+2. Custom code
+setTimeout(function() {
+  var dashboardCallLoaded = _satellite.getVar('dashboardCallLoaded')
+  var pageNameVal = _satellite.getVar('pageName');
+  if(dashboardCallLoaded == 'true' &&  pageNameVal == "dashboard"){
+  }else{
+     _satellite.track('trackPages');
+    _satellite.setVar('dashboardCallLoaded', 'false')
+    _satellite.setVar('pageLoadCallTriggered', 'true')
+  }
+}, 1000);
+*/
+/*
+C&S page load call
+1. Condition
+ RallyUUID doesnt match regex "^\s*$"
+2. Custom code
+setTimeout(function() {
+  var dashboardCallLoaded = _satellite.getVar('dashboardCallLoaded')
+  var pageNameVal = _satellite.getVar('pageName');
+  if(dashboardCallLoaded == 'true' &&  pageNameVal == "dashboard"){
+  }else{
+     _satellite.track('trackPages');
+    _satellite.setVar('dashboardCallLoaded', 'false')
+    _satellite.setVar('pageLoadCallTriggered', 'true')
+  }
+}, 1000);
+
+M&R pageLoad call
+
+1. Event type
+  DCR change: "mrTrackPageLoad"
+
+2. Condition
+ RallyUUID doesnt match regex "^\s*$"
+ %pageName% == "dashboard"
+3. Custom code
+  setTimeout(function() {
+   var dashboardCallLoaded = _satellite.getVar('dashboardCallLoaded')
+    var pageNameVal = _satellite.getVar('pageName');
+    if(dashboardCallLoaded == 'true' &&  pageNameVal == "dashboard"){
+      return false;
+    }else{
+       _satellite.setVar('dashboardCallLoaded', 'false');
+      _satellite.setVar('pageLoadCallTriggered', 'true');
+    }
+  }, 1000);
+*/
+
+
+
+
+</script>

@@ -1,0 +1,141 @@
+<head>
+<!-- <script src="https://assets.adobedtm.com/512027f42d3c/ccbcb5ffadde/launch-e4c8b3e7511e-development.min.js"></script> -->
+<script src="//assets.adobedtm.com/512027f42d3c/ccbcb5ffadde/launch-e4c8b3e7511e-development.min.js" async></script>
+<script>
+
+
+  // window.dataPush = function(obj) {
+  //   if(typeof(window.pageDataLayer) != "undefined" && window.pageDataLayer != undefined){
+  //       if (arguments.length == 1 && typeof obj === 'object' && obj != null){
+  //           var eventType = obj.eventType;
+  //            window.pageDataLayer[eventType]= obj
+  //           var event = document.createEvent('customEvent')
+  //           event.initCustomEvent(eventType, true, true, '');
+  //           document.body.dispatchEvent(event);
+  //       }
+  //   }
+  // };
+
+window.appEventDataLayer = window.appEventDataLayer || [];
+window.appEventDataLayer.push({
+  "event":"Page Loaded",
+  "pageName": "Data-Layer-Manager page name",
+  "siteSection1": "Data-Layer-Manager site section"
+
+});
+
+%Business Unit%:%Website%:activate:%MostRecentEventFullname%
+// var event = document.createEvent('customEvent')
+//   event.initCustomEvent('pageViewCall', true, true, {
+//       eventType: "pageViewCall",
+//       pageName: "",
+//       siteSectionL1: "",
+//       siteSectionL2: "",
+//       siteSectionL3: "",
+//       pageLanguage:"",
+//       impressionsTitles: "",
+//       pageType: "" //modal or tab or spa
+// });
+// document.body.dispatchEvent(event);
+
+// window.dataPush({
+//       eventType: "pageViewCall",
+//       pageName: "",
+//       siteSectionL1: "",
+//       siteSectionL2: "",
+//       siteSectionL3: "",
+//       pageLanguage:"",
+//       impressionsTitles: "",
+//       pageType: "" //modal or tab or spa
+//     });
+
+  // window.dataPush = function(obj) {
+  //    try{
+  //       window.dataArr = window.dataArr || [];
+  //       window.pageDataLayer = obj;
+  //       /* code to trigger adobe analytics call start*/
+  //       var event = document.createEvent('customEvent')
+  //       event.initCustomEvent(obj.eventType, true, true, '');
+  //       document.body.dispatchEvent(event);
+  //       /* code to trigger adobe analytics call end*/
+  //       dataArr.push(obj)
+  //       window.pageDataLayer = dataArr;
+  //     }catch(err) {}
+  // }
+
+  window.dataPush = function(obj) {
+     try{
+        window.dataArr = window.dataArr || [];
+        window.pageDataLayer = obj;
+        /* code to trigger adobe analytics call start*/
+        var event = document.createEvent('customEvent')
+        event.initCustomEvent(obj.eventType, true, true, '');
+        document.body.dispatchEvent(event);
+        /* code to trigger adobe analytics call end*/
+        dataArr.push(obj)
+        window.pageDataLayer = dataArr;
+        window.pageDataLayer.lastState = obj
+      }catch(err) {}
+  }
+
+
+function linkClick(){
+  window.dataPush({
+        "eventType": 'mouseclick',
+        "clickName": "Sign in",
+        "clickUrl": "http://myuhc.com/sign-in",
+        "clickType": "link"
+      }
+    )};
+
+  function downloadClick(){
+    window.dataPush({
+          "eventType": 'downloadclick',
+          "clickName": "download whitepaper",
+          "clickUrl": "http://myuhc.com/whitepaper.pdf",
+          "clickType": "link"
+        }
+  )};
+
+  function memberDetails(){
+    window.dataPush({
+          "eventType": 'user',
+          "clickName": "member profile data",
+          "clickUrl": "http://myuhc.com/sign-in",
+          "clickType": "link"
+        }
+  )};
+
+  function searchDiscoveryClick(){
+    window.appEventDataLayer.push({
+      "event":"link click",
+      "linkName": "Data-Layer-Manager link name"
+
+    });
+  };
+  </script>
+</head>
+<body onload=pageEvent();>
+
+<a href="#" onClick="linkClick();">Sign in</a><br><br>
+<a href="#" onClick="downloadClick();" >Download Whitepaper</a>
+<br><br><br>
+<a href="#" onClick="memberDetails();">update member details</a><br><br>
+
+<a href="#" onClick="searchDiscoveryClick();">Search Discovery click</a><br><br>
+<script>
+function pageEvent(){
+setTimeout(function(){
+window.dataPush({
+        eventType: "pageload",
+        pageName: "home page",
+        siteSectionL1: "pharmacy",
+        siteSectionL2: "",
+        siteSectionL3: "",
+        pageLanguage:"",
+        impressionsTitles:"",
+        pageType: "" //modal or tab or spaf
+      })  }, 2000);
+}
+</script>
+</body>

@@ -1,0 +1,96 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Capture Mid</title>
+        <?php
+      header("Access-Control-Allow-Origin: *");
+    ?>
+
+
+    <script src="//assets.adobedtm.com/bff7f95d5e60a9bb1bafa9115ce25108c698418f/satelliteLib-9294dccb52a6fcb12fa8113cd07c98970dbd63d8-staging.js"></script>
+    <script>
+    window.pageDataLayer={
+        content: {
+          pageName:"capture_mid_page"
+        }
+    }
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+
+    function createCookie(name, value, expires, path, domain) {
+      var cookie = name + "=" + escape(value) + ";";
+
+      if (expires) {
+        // If it's a date
+        if(expires instanceof Date) {
+          // If it isn't a valid date
+          if (isNaN(expires.getTime()))
+           expires = new Date();
+        }
+        else
+          expires = new Date(new Date().getTime() + parseInt(expires) * 1000 * 60 * 60 * 24);
+
+        cookie += "expires=" + expires.toGMTString() + ";";
+      }
+
+      if (path)
+        cookie += "path=" + path + ";";
+      if (domain)
+        cookie += "domain=" + domain + ";";
+
+      document.cookie = cookie;
+    }
+
+    function writeStore(domain, store) {
+        let key = domain;
+        let serializedData = JSON.stringify(store);
+        window.localStorage.setItem(key, serializedData);
+    }
+
+    window.addEventListener("message", function(event) {
+        var messageEle = document.getElementById('message');
+        messageEle.innerHTML = "Message Received: " + event.data;
+        //writeStore(window.location.hostname, event.data)
+          createCookie("custom_mcid_pm",messageEle, 30,'/');
+        console.log("message recieved", messageEle)
+    });
+    //createCookie("website", "audero.it", new Date(new Date().getTime() + 10000));
+    // var custom_mcid = getParameterByName('custom_mcid');
+    function getCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0;i < ca.length;i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+    }
+    </script>
+  </head>
+
+  <body>
+          Hello, today is <?php echo date('l, F jS, Y'); ?>
+    <div id="message"></div>
+
+    <a data-test-id="button-visit-doctor-on-demand" href="https://www.doctorondemand.com/" 
+    class="sc-htoDjs bnpEL action-btn block ally-focus-within"
+    target="_blank"
+     rel="noopener noreferrer"
+     >Visit Doctor On Demand &nbsp;
+     <i class="icon icon_link" aria-hidden="true"></i></a>
+    <a data-test-id="button-visit-amwell"
+     href="https://amwell.com/"
+      class="sc-htoDjs bnpEL action-btn block"
+       target="_blank"
+       rel="noopener noreferrer">
+       Visit Amwell &nbsp;<i class="icon icon_link" aria-hidden="true"></i></a>
+  </body>
+</html>
